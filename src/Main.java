@@ -14,6 +14,7 @@ public class Main {
         Stack<Double> operandStack = new Stack<>();
         Stack<String> operatorStack = new Stack<>();
 
+
         for (String token : tokens) {
             if (isNumeric(token)) {
                 operandStack.push(Double.parseDouble(token));
