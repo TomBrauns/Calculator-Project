@@ -122,7 +122,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
-        double result = Double.NaN;
+        double result;
 
         // Next 3 lines can be commented out, as they solely serve as introduction
         System.out.print("Please enter your name: ");
