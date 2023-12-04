@@ -14,7 +14,6 @@ public class Main {
         Stack<Double> operandStack = new Stack<>();
         Stack<String> operatorStack = new Stack<>();
 
-
         for (String token : tokens) {
             if (isNumeric(token)) {
                 operandStack.push(Double.parseDouble(token));
@@ -23,6 +22,16 @@ public class Main {
                     applyOperation(operandStack, operatorStack.pop());
                 }
                 operatorStack.push(token);
+            }
+            else if (isSquaredOperator(token)) {
+                // Extract the base and exponent from the token (e.g., "5^2" => base=5, exponent=2)
+                String[] parts = token.split("\\^");
+                double base = Double.parseDouble(parts[0]);
+                double exponent = Double.parseDouble(parts[1]);
+
+                // Calculate the squared value
+                double squaredValue = Math.pow(base, exponent);
+                operandStack.push(squaredValue);
             }
         }
 
@@ -53,6 +62,12 @@ public class Main {
         return str.equals("+") || str.equals("-") || str.equals("*") || str.equals("/");
     }
 
+    // Function to check if the input is a Squared Operator
+    // \\d represents a digit from 0-9, the + behind it implies that it can be one or more, ensuring that the two components of a squared operation are given
+    private static boolean isSquaredOperator(String str) {
+        return str.matches("\\d+\\^\\d+");
+    }
+
     // Function to actually prioritize "*" and "/", as it should be in math!
     private static boolean hasHigherPrecedence(String op1, String op2) {
         return (op1.equals("*") || op1.equals("/")) && (op2.equals("+") || op2.equals("-"));
@@ -68,18 +83,23 @@ public class Main {
         double operand2 = operandStack.pop();
         double operand1 = operandStack.pop();
 
-        // Actual Operators
+        // Actual Operators (such as +,-,* and / (Modulo as well as Squared still need to be added)
         switch (operator) {
+
             case "+":
                 operandStack.push(operand1 + operand2);
                 break;
+
             case "-":
                 operandStack.push(operand1 - operand2);
                 break;
+
             case "*":
                 operandStack.push(operand1 * operand2);
                 break;
+
             case "/":
+                // Zero Check for Divisions
                 if (operand2 != 0) {
                     operandStack.push(operand1 / operand2);
                 } else {
@@ -87,6 +107,7 @@ public class Main {
                     System.exit(1);
                 }
                 break;
+
             default:
                 System.out.println("Invalid operator: " + operator);
                 System.exit(1);
