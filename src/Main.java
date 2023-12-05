@@ -10,6 +10,7 @@ public class Main {
 
     // Evaluate Mathematical Expression
     public static double evaluateExpression(String expression) {
+
         String[] tokens = expression.split(" ");
         Stack<Double> operandStack = new Stack<>();
         Stack<String> operatorStack = new Stack<>();
@@ -134,6 +135,12 @@ public class Main {
             System.out.println("Please enter a mathematical expression (e.g.: 5 * 2):");
             String expression = scanner.nextLine();
 
+
+            if (expression.equalsIgnoreCase("exit")) {
+                System.out.println("Hey " + userName + ", I hope you had fun using the calculator. Have a lovely day!");
+                break;
+            }
+
             result = evaluateExpression(expression);
             if (!Double.isNaN(result)) {
                 displayResult(result);
@@ -144,14 +151,10 @@ public class Main {
                 // typing exit changes the boolean to false
                 if (choice.equalsIgnoreCase("exit")) {
                     isRunning = false;
+
                 } else if (choice.equalsIgnoreCase("clear")) {
                     result = Double.NaN;
                 }
-            }
-
-            //If the boolean for isRunning is set to false, the application ends.
-            if (!isRunning) {
-                break;
             }
         }
 
@@ -160,8 +163,14 @@ public class Main {
 }
 
 //Current Agenda:
+
+//Functional Requirement
 // 0. Implement Option to actually keep on calculating with the previous Result, if existant!
-// 1. Option to "exit" whenever you have the choice to "Please enter a mathematical expression (e.g.: 5 * 2):" to end the application
-// 2. Writing actual tests for the functions of this application to ensure a better tested Calculator
-// 3. Create A User Database, so in the case that you already have used it before, you may log back in
-// 4. If you are logged in, you can access the previous results, as well as the inputs
+
+
+//Software Quality Issues
+// 1. Writing actual tests for the functions of this application to ensure a better tested Calculator
+
+//Database Issues:
+// 2. Create A User Database, so in the case that you already have used it before, you may log back in
+// 3. If you are logged in, you can access the previous results, as well as the inputs
